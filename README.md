@@ -56,6 +56,68 @@ This project requires an API key from `polygon.io` to function properly.
 3. The project will automatically load the API key from the `.env` file when you run it.
 
 
+## Running AutoTrade
+
+To run the AutoTrade project using Poetry, follow these steps:
+
+1. Ensure you are in the project directory:
+    ```bash
+    cd autotrade
+    ```
+
+2. Run the main script:
+    ```bash
+    poetry run python -m autotrade
+    ```
+
+
+## Testing
+
+Follow these steps to run the tests for this project:
+
+### 1. Writing Tests
+- Test functions should begin with `test_` to be automatically discovered by `pytest`.
+- Tests should be placed in the `tests/` directory.
+
+### 2. Running Tests with `pytest`
+To run all the tests in the project, use the following command:
+
+```bash
+poetry run pytest
+```
+
+This command will automatically discover and run all tests located in the `tests/` directory.
+
+### 3. Running Tests with Debugging Output
+To see `print()` statements and debug output during test execution, use the `-s` flag to disable pytest's output capturing:
+
+```bash
+poetry run pytest -s
+```
+
+This will allow you to see any `print()` statements in the terminal.
+
+### 4. Running Tests for Specific Markers
+If you have tests marked with specific markers (e.g., `@pytest.mark.env`), you can run only those tests by using the `-m` flag. For example, to run tests marked with `env`:
+
+```bash
+poetry run pytest -m env
+```
+
+### 5. Running Tests for Specific Test Files
+To run a specific test file, you can provide the file path directly:
+
+```bash
+poetry run pytest tests/test_env.py  # Run a specific test file
+```
+
+To run all tests in the `tests/` directory:
+
+```bash
+poetry run pytest tests/  # Run all tests in the tests directory
+```
+
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request.
