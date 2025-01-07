@@ -10,8 +10,10 @@ DEBUG = True
 
 #default connection properites
 DEFAULT_XAPI_ADDRESS        = 'xapi.xtb.com'
-DEFAULT_XAPI_PORT           = 5124
-DEFUALT_XAPI_STREAMING_PORT = 5125
+# DEMO: main port: 5124, streaming port: 5125,
+# REAL: main port: 5112, streaming port: 5113.
+DEFAULT_XAPI_PORT           = 5112
+DEFUALT_XAPI_STREAMING_PORT = 5113
 
 # wrapper name and version
 WRAPPER_NAME    = 'python'
@@ -55,7 +57,15 @@ class JsonSocket(object):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket = ssl.wrap_socket(sock)
+            ##
+            ## SSL wrapping
+            if self._ssl:
+                context = ssl.create_default_context()
+                self.socket = context.wrap_socket(sock, server_hostname=address)
+            else:
+                self.socket = sock
+            ##
+            #self.socket = ssl.wrap_socket(sock)
         self.conn = self.socket
         self._timeout = None
         self._address = address
