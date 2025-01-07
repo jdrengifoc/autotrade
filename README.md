@@ -48,9 +48,14 @@ This project requires an API key from `polygon.io` to function properly.
     cp .env.example .env
     ```
 
-2. Open the `.env` file and replace `your_api_key_here` with your actual `polygon.io` API key:
+2. Open the `.env` file and replace `your_api_key_here` with your actual `polygon.io` API key and your XTB credentials:
     ```
     POLYGON_API_KEY=your_api_key_here
+
+    ACCOUNTS_XTB=[
+    {"name": "JohnDoe", "username": "johndoe_user", "password": "johndoe_password"},
+    {"name": "JaneSmith", "username": "janesmith_user", "password": "janesmith_password"}
+]
     ```
 
 3. The project will automatically load the API key from the `.env` file when you run it.

@@ -1,6 +1,6 @@
 import pytest
 from autotrade.utils import get_polygon_api_key
-from polygon import RESTClient
+#from polygon import RESTClient
 
 @pytest.mark.polygon
 def test_polygon_client():

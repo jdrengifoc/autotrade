@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-import requests
+import json
 
 def get_polygon_api_key() -> str:
     # Load environment variables
@@ -12,20 +12,33 @@ def get_polygon_api_key() -> str:
     
     return api_key
 
-def check_ticker_available(ticker: str) -> bool:
-    API_KEY = get_polygon_api_key()
-    url = f"https://api.polygon.io/v3/reference/tickers/{ticker}"
+def get_xtb_credentials(username: str) -> dict:
+    """
+    Retrieve username and password for a given personal name from the environment variables.
+
+    Args:
+        username (str): The username associated with the credentials.
+
+    Returns:
+        dict: A dictionary containing 'email' and 'password'.
+
+    Raises:
+        ValueError: If the credentials are not found or are not properly formatted.
+    """
+    # Load environment variables
+    load_dotenv()
+    credentials_json = os.getenv("XTB_CREDENTIALS")
     
-    # Make the API request
-    response = requests.get(url, params={"apiKey": API_KEY})
+    if not credentials_json:
+        raise ValueError("`XTB_CREDENTIALS` is not set. Please add it to your .env file.")
+
+    try:
+        credentials = json.loads(credentials_json)
+    except json.JSONDecodeError:
+        raise ValueError("`XTB_CREDENTIALS` is not a valid JSON string.")
+
+    for entry in credentials:
+        if entry["username"] == username:
+            return entry['credentials']
     
-    # Check if the response is successful
-    if response.status_code == 200:
-        # If successful, return True indicating the ticker exists
-        return True
-    elif response.status_code == 404:
-        # If not found (404), return False indicating the ticker does not exist
-        return False
-    else:
-        # For any other errors, raise an exception
-        response.raise_for_status()
+    raise ValueError(f"Credentials for '{username}' not found.")
