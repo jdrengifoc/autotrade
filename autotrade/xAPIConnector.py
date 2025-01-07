@@ -64,8 +64,10 @@ class JsonSocket(object):
                 self.socket = context.wrap_socket(sock, server_hostname=address)
             else:
                 self.socket = sock
+            # REPLACE THE DEPRECATED
+            # self.socket = ssl.wrap_socket(sock)
             ##
-            #self.socket = ssl.wrap_socket(sock)
+            
         self.conn = self.socket
         self._timeout = None
         self._address = address
